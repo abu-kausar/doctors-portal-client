@@ -1,15 +1,24 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../Context/AuthProvider';
 
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext);
+    const [darkMode, setDarkMode] = useState('');
 
     const handleLogout = () => {
         logOut()
             .then(() => { })
             .catch(err => console.log(err));
     }
+
+    const handleDarkMode = () => {
+        setDarkMode(darkMode === '' ? 'dark' : '');
+    }
+
+    useEffect(() => {
+        document.querySelector('html').setAttribute('data-theme', darkMode);
+    },[darkMode]);
 
     const menuItems = <>
         <li><Link to="/">Home</Link></li>
@@ -20,11 +29,17 @@ const Navbar = () => {
             user?.uid ?
                 <>
                     <li><Link to="/dashboard">Dashboard</Link></li>
-                    <li><button className='bg-accent text-white' onClick={handleLogout}>Sign Out</button></li>
+                    <li><button onClick={handleLogout}>Sign Out</button></li>
                 </>
                 :
                 <li><Link to="/login">Login</Link></li>
         }
+        {
+            darkMode === 'dark' ? <li><button className='bg-white text-black' onClick={handleDarkMode}>Light Theme</button></li>
+            :
+            <li><button className='bg-black text-white' onClick={handleDarkMode}>Dark Theme</button></li>
+        }
+        
 
     </>
     return (
