@@ -13,7 +13,7 @@ const Checkoutform = ({ booking }) => {
 
     useEffect(() => {
         // Create PaymentIntent as soon as the page loads
-        fetch("http://localhost:5000/create-payment-intent", {
+        fetch("https://doctors-portal-server-two-beta.vercel.app/create-payment-intent", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -76,7 +76,7 @@ const Checkoutform = ({ booking }) => {
                 bookingId: _id
             }
             
-            fetch('http://localhost:5000/payments', {
+            fetch('https://doctors-portal-server-two-beta.vercel.app/payments', {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json',
